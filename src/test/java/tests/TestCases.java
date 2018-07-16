@@ -10,6 +10,7 @@ import pageobjects.DashboardPO;
 import pageobjects.LoginPO;
 import pageobjects.PostPO;
 import pageobjects.VideoUtilityPO;
+import utils.AppiumUtils;
 
 /**
  * This is the Main Test Cases Class, All the test cases are defined in this.
@@ -50,12 +51,16 @@ public class TestCases extends BaseTest {
         loginPO.login(username, password);
         Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
         postPO.tapOnPostButton();
-        postPO.tapOnpostNowConfirmationButton();
+        Assert.assertFalse(postPO.isPostScreenDisplayed(), "Post screen is still visible event after submitted the post");
     }
 
     @Test
-    public void verifyUserCanLikeThePost(){
+    public void verifyUserCanLikeThePost() {
+        final int postNo=3;
         DashboardPO dashboardPO = new DashboardPO(driver);
-
+        dashboardPO.waitTillDashboardIsDisplayed();
+        dashboardPO.moveToPost(postNo);
+        dashboardPO.tapOnLikeButton();
+        waitUtils.staticWait(4000);
     }
 }

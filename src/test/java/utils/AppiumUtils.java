@@ -89,7 +89,7 @@ public class AppiumUtils {
         int start_end_X = (int) (size.getWidth() * 0.50);
 
         TouchAction swipe = new TouchAction(driver).press(PointOption.point(start_end_X, start_Y))
-                .waitAction(waitOptions(ofSeconds(2)))
+                .waitAction(waitOptions(ofSeconds(1)))
                 .moveTo(PointOption.point(start_end_X, end_Y)).release().perform();
     }
 

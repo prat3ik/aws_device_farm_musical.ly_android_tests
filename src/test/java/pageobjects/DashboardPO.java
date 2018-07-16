@@ -23,6 +23,11 @@ public class DashboardPO extends BasePO {
         super(driver);
     }
 
+    public void waitTillDashboardIsDisplayed() {
+        waitUtils.staticWait(2000);
+        waitUtils.waitForElementToBeVisible(forYouTextView, driver);
+    }
+
     public void tapOnUserProfile() {
         Dimension size = driver.manage().window().getSize();
         int width = size.getWidth();
@@ -77,5 +82,11 @@ public class DashboardPO extends BasePO {
             allowButton.click();
             allowButton.click();
         }
+    }
+
+    public void moveToPost(int postNo) {
+        for (int i = 1; i < postNo; i++)
+            AppiumUtils.verticalScroll(driver);
+        waitUtils.staticWait(1000);
     }
 }

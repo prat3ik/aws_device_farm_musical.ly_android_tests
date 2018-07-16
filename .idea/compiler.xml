@@ -6,11 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="muscal.ly_appium_android_tests" />
+        <module name="com.pratik.muscal.ly.appium.android.tests" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="muscal.ly_appium_android_tests" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
