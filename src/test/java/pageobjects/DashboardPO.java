@@ -58,17 +58,24 @@ public class DashboardPO extends BasePO {
         return forYouTextView.isDisplayed();
     }
 
-    @AndroidFindBy(id = "btn1")
+    @AndroidFindBy(id = "com.android.packageinstaller:id/permission_allow_button")
     AndroidElement allowButton;
+
+    @AndroidFindBy(xpath = "//*[@id='ath']")
+    AndroidElement plusButton;
 
     public void tapOnPlusButton() {
         Dimension size = driver.manage().window().getSize();
         int width = size.getWidth();
         int height = size.getHeight();
+        waitUtils.staticWait(5000);
         AppiumUtils.clickOnPoint((int) (width * 0.5), (int) (height * 0.98), driver);
+        //plusButton.click();
         waitUtils.staticWait(1000);
-        allowButton.click();
-        allowButton.click();
-        allowButton.click();
+        if (AppiumUtils.isElementDisplayed(allowButton)) {
+            allowButton.click();
+            allowButton.click();
+            allowButton.click();
+        }
     }
 }

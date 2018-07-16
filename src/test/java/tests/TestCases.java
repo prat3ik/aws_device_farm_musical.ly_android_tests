@@ -38,11 +38,19 @@ public class TestCases extends BaseTest {
 
     @Test
     public void verifyUserCanUploadPost() {
+        final String username = "pratikchachpara@gmail.com";
+        final String password = "pratikmusicly";
+
         String postText = "Hello, this is my sample post: " + System.currentTimeMillis();
         DashboardPO dashboardPO = new DashboardPO(driver);
         dashboardPO.tapOnPlusButton();
         PostPO postPO = new VideoUtilityPO(driver).uploadRecordedVideo();
         postPO.publishPost(postText);
+        LoginPO loginPO = dashboardPO.tapOnLoginLink();
+        loginPO.login(username, password);
+        Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
+        postPO.tapOnPostButton();
+        postPO.tapOnpostNowConfirmationButton();
     }
 
     @Test

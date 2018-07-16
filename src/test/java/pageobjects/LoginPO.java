@@ -50,4 +50,5 @@ public class LoginPO extends BasePO {
         return AppiumUtils.isElementDisplayed(invalidEmailOrPasswordErrorTextView);
     }
 
+
 }

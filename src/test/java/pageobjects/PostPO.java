@@ -14,13 +14,14 @@ public class PostPO extends BasePO {
 
     protected void setPostText(String postText){
         postTextField.sendKeys(postText);
+        driver.hideKeyboard();
     }
 
 
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/uj")
     AndroidElement postButton;
 
-    protected void tapOnPostButton(){
+    public void tapOnPostButton(){
         postButton.click();
     }
 
@@ -31,6 +32,10 @@ public class PostPO extends BasePO {
     public void publishPost(String postText){
         setPostText(postText);
         tapOnPostButton();
+        postNowConfirmationButton.click();
+    }
+
+    public void tapOnpostNowConfirmationButton(){
         postNowConfirmationButton.click();
     }
 
