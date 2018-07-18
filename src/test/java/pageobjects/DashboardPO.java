@@ -89,4 +89,15 @@ public class DashboardPO extends BasePO {
             AppiumUtils.verticalScroll(driver);
         waitUtils.staticWait(1000);
     }
+
+    public SearchPO tapOnSearchButton() {
+        Dimension size = driver.manage().window().getSize();
+        int width = size.getWidth();
+        int height = size.getHeight();
+        waitUtils.staticWait(5000);
+        AppiumUtils.clickOnPoint((int) (width * 0.3), (int) (height * 0.98), driver);
+        //plusButton.click();
+        waitUtils.staticWait(1000);
+        return new SearchPO(driver);
+    }
 }

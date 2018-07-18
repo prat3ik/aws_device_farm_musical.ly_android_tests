@@ -6,11 +6,9 @@ package tests;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import pageobjects.DashboardPO;
-import pageobjects.LoginPO;
-import pageobjects.PostPO;
-import pageobjects.VideoUtilityPO;
+import pageobjects.*;
 import utils.AppiumUtils;
+import utils.PropertyUtils;
 
 /**
  * This is the Main Test Cases Class, All the test cases are defined in this.
@@ -19,9 +17,12 @@ import utils.AppiumUtils;
  */
 public class TestCases extends BaseTest {
 
+    private final String USERNAME_TO_BE_SEARCHED = PropertyUtils.getProperty("search.username", "username");
+
     @BeforeTest
     @Override
     public void setUpPage() {
+
     }
 
     @Test
@@ -63,4 +64,14 @@ public class TestCases extends BaseTest {
         dashboardPO.tapOnLikeButton();
         waitUtils.staticWait(4000);
     }
+
+    @Test
+    public void verifyUserCanCommentOnFansOfUser(){
+        DashboardPO dashboardPO = new DashboardPO(driver);
+        dashboardPO.waitTillDashboardIsDisplayed();
+        SearchPO searchPO = dashboardPO.tapOnSearchButton();
+        searchPO.serachUser(USERNAME_TO_BE_SEARCHED);
+
+    }
+
 }

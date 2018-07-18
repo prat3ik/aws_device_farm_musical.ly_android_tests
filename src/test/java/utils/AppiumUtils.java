@@ -10,6 +10,8 @@ import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.Dimension;
 
+import java.util.List;
+
 import static io.appium.java_client.touch.WaitOptions.waitOptions;
 import static java.time.Duration.ofMillis;
 import static java.time.Duration.ofSeconds;
@@ -115,6 +117,7 @@ public class AppiumUtils {
 
     /**
      * This method will click at particular point+
+     *
      * @param x
      * @param y
      * @param driver
@@ -144,6 +147,24 @@ public class AppiumUtils {
             alertIsPresent = false;
         }
         return alertIsPresent;
+    }
+
+
+    /**
+     * This method will return the Element using Element Text from Element List
+     *
+     * @param driver
+     * @param elementList
+     * @param textOfElement
+     * @return
+     */
+    public static AndroidElement getElementFromText(AppiumDriver driver, List<AndroidElement> elementList, String textOfElement) {
+        for (AndroidElement el : elementList) {
+            if (textOfElement.equals(el.getText())) {
+                return el;
+            }
+        }
+        return null;
     }
 
 
