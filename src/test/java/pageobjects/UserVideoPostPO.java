@@ -3,6 +3,7 @@ package pageobjects;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import org.testng.Assert;
 import utils.AppiumUtils;
 
 public class UserVideoPostPO extends BasePO {
@@ -24,12 +25,43 @@ public class UserVideoPostPO extends BasePO {
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/yj")
     AndroidElement commentEditText;
 
-    public void waitTillVideoPostIsDisplayed(){
-        waitUtils.waitForElementToBeVisible(commentEditText, driver);
+    public void waitTillVideoPostIsDisplayed() {
+        waitUtils.staticWait(2000);
+        //waitUtils.waitForElementToBeVisible(commentEditText, driver);
     }
 
-    public void tapOnCommentIcon(int comment_icon_x, int comment_icon_y) {
+    public boolean tapOnCommentIcon(int comment_icon_x, int comment_icon_y) {
         waitTillVideoPostIsDisplayed();
         AppiumUtils.clickOnPoint(comment_icon_x, comment_icon_y, driver);
+        return AppiumUtils.isElementDisplayed(disabledCommentSectionTextView) || AppiumUtils.isElementDisplayed(limitedCommentsTextView);
     }
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='This user has disabled comment section']")
+    AndroidElement disabledCommentSectionTextView;
+
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Comments of this video have been limited']")
+    AndroidElement limitedCommentsTextView;
+
+    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/yl")
+    AndroidElement commentButton;
+
+
+    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/vp")
+    AndroidElement postedFirstComment;
+
+    public void postComment(String commentText) {
+        commentEditText.sendKeys(commentText);
+        waitUtils.staticWait(200);
+        driver.getKeyboard();
+        commentButton.click();
+        waitUtils.staticWait(400);
+        Assert.assertEquals(postedFirstComment.getText(), commentText, "Typed Comment didn't match");
+    }
+
+    public void moveBackTOUserProfileAfterOpeningComments() {
+        driver.navigate().back();
+        driver.navigate().back();
+    }
+
+
 }

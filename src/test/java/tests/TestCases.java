@@ -23,6 +23,7 @@ public class TestCases extends BaseTest {
     private final String FAN2_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan5", "username");
     private final int COMMENT_ICON_X = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_x", 980);
     private final int COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_y", 1235);
+    private final String COMMENT_TEXT = PropertyUtils.getProperty("comment.text", "Test1235");
 
     @BeforeTest
     @Override
@@ -73,17 +74,18 @@ public class TestCases extends BaseTest {
     @Test
     public void verifyUserCanCommentOnFansOfUser() {
         DashboardPO dashboardPO = new DashboardPO(driver);
-        dashboardPO.waitTillDashboardIsDisplayed();
-        dashboardPO.tapOnUserProfile();
-        LoginPO loginPO = dashboardPO.tapOnLoginLink();
-        loginPO.login(USERNAME, PASSWORD);
-        Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
+//        dashboardPO.waitTillDashboardIsDisplayed();
+//        dashboardPO.tapOnUserProfile();
+//        LoginPO loginPO = dashboardPO.tapOnLoginLink();
+//        loginPO.login(USERNAME, PASSWORD);
+//        Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
 
         SearchPO searchPO = dashboardPO.tapOnSearchButton();
         UserProfilePO userProfilePO = searchPO.serachAndSelectTheUser(USERNAME_TO_BE_SEARCHED);
         FansPO fansPO = userProfilePO.tapOnFansCount();
         UserProfilePO fanProfilePO = fansPO.selectFan(FAN2_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y);
+        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+
     }
 
 }

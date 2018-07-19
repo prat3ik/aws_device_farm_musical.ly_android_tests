@@ -39,24 +39,32 @@ public class UserProfilePO extends BasePO {
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/ahb")
     AndroidElement firstVideoFromPost;
 
-    protected UserVideoPostPO selectFirstVideoFromUserPosts(){
-        if (AppiumUtils.isElementDisplayed(noVideosYetTextView))
-            System.out.println("There are no videos");
-        else if (AppiumUtils.isElementDisplayed(noVideosYetTextView))
-            System.out.println("This is Private Account, so you can not see any post for this user");
-        else if(AppiumUtils.isElementDisplayed(firstVideoFromPost)){
+    protected UserVideoPostPO selectFirstVideoFromUserPosts() {
+
+
+        if (AppiumUtils.isElementDisplayed(firstVideoFromPost)) {
+            System.out.println(firstVideoFromPost);
             firstVideoFromPost.click();
             return new UserVideoPostPO(driver);
+        } else if (AppiumUtils.isElementDisplayed(privateAccountTextView))
+            System.out.println("This is Private Account, so you can not see any post for this user");
+        else if (AppiumUtils.isElementDisplayed(noVideosYetTextView)) {
+            System.out.println("There are no videos");
         }
         return null;
     }
 
 
-    public void commentOnFirstVideo(int comment_icon_x, int comment_icon_y) {
+    public void commentOnFirstVideo(int comment_icon_x, int comment_icon_y, String commentText) {
         UserVideoPostPO videoPostPO = selectFirstVideoFromUserPosts();
-        if(videoPostPO==null){
-            videoPostPO.tapOnCommentIcon(comment_icon_x, comment_icon_y);
+        System.out.println(videoPostPO);
+        if (videoPostPO != null) {
+            boolean isCommentIsDisabled = videoPostPO.tapOnCommentIcon(comment_icon_x, comment_icon_y);
+            if(isCommentIsDisabled)
+                videoPostPO.moveBackTOUserProfileAfterOpeningComments();
+            else
+                videoPostPO.postComment(commentText);
         }
-
+        driver.navigate().back();
     }
 }
