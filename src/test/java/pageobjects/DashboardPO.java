@@ -24,10 +24,24 @@ public class DashboardPO extends BasePO {
     }
 
     public void waitTillDashboardIsDisplayed() {
-        waitUtils.staticWait(2000);
         waitUtils.waitForElementToBeVisible(forYouTextView, driver);
     }
 
+    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/an1")
+    AndroidElement forYouTextView;
+
+    /**
+     * It will return whether Dashboard is being properly displayed.
+     *
+     * @return
+     */
+    public boolean isDashboardDisplayed() {
+        return forYouTextView.isDisplayed();
+    }
+
+    /**
+     * This method will tap on User Profile.
+     */
     public void tapOnUserProfile() {
         Dimension size = driver.manage().window().getSize();
         int width = size.getWidth();
@@ -43,24 +57,6 @@ public class DashboardPO extends BasePO {
         LoginPO loginPO = new LoginPO(driver);
         loginPO.waitTillPageIsDisplayed();
         return loginPO;
-    }
-
-    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/aki")
-    AndroidElement likeButton;
-
-    public boolean isLikeButtonDisplayed() {
-        return likeButton.isDisplayed();
-    }
-
-    public void tapOnLikeButton() {
-        likeButton.click();
-    }
-
-    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/an1")
-    AndroidElement forYouTextView;
-
-    public boolean isDashboardDisplayed() {
-        return forYouTextView.isDisplayed();
     }
 
     @AndroidFindBy(id = "com.android.packageinstaller:id/permission_allow_button")
@@ -99,5 +95,29 @@ public class DashboardPO extends BasePO {
         //plusButton.click();
         waitUtils.staticWait(1000);
         return new SearchPO(driver);
+    }
+
+
+    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/aki")
+    AndroidElement likeButton;
+
+    public boolean isLikeButtonDisplayed() {
+        return likeButton.isDisplayed();
+    }
+
+    public void tapOnLikeButton() {
+        likeButton.click();
+    }
+
+
+    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/yi")
+    AndroidElement commentButton;
+
+    protected boolean isCommentButtonDisplayed() {
+        return commentButton.isDisplayed();
+    }
+
+    protected void tapOnCommentButton() {
+        commentButton.click();
     }
 }

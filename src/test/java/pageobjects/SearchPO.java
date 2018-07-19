@@ -59,13 +59,14 @@ public class SearchPO extends BasePO {
     }
 
 
-    public void serachUser(String username) {
+    public UserProfilePO serachAndSelectTheUser(String username) {
         tapOnSearchBox();
         waitUtils.waitForElementToBeVisible(searchUsersBox, driver);
         tapOnSearchUsersBox();
         searchUsername(username);
         tapOnSearchButton();
-        selectUser("@" + username+",");
+        selectUser("@" + username + ",");
+        return new UserProfilePO(driver);
     }
 
 

@@ -3,6 +3,7 @@ package pageobjects;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
+import utils.AppiumUtils;
 
 public class UserProfilePO extends BasePO {
     /**
@@ -23,11 +24,39 @@ public class UserProfilePO extends BasePO {
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/a4t")
     AndroidElement fansCountTextView;
 
-    public FansPO tapOnFansCount(){
+    public FansPO tapOnFansCount() {
         fansCountTextView.click();
         return new FansPO(driver);
     }
 
 
+    @AndroidFindBy(xpath = "android.widget.TextView[@text='No videos yet']")
+    AndroidElement noVideosYetTextView;
 
+    @AndroidFindBy(xpath = "android.widget.TextView[@text='Private Account']")
+    AndroidElement privateAccountTextView;
+
+    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/ahb")
+    AndroidElement firstVideoFromPost;
+
+    protected UserVideoPostPO selectFirstVideoFromUserPosts(){
+        if (AppiumUtils.isElementDisplayed(noVideosYetTextView))
+            System.out.println("There are no videos");
+        else if (AppiumUtils.isElementDisplayed(noVideosYetTextView))
+            System.out.println("This is Private Account, so you can not see any post for this user");
+        else if(AppiumUtils.isElementDisplayed(firstVideoFromPost)){
+            firstVideoFromPost.click();
+            return new UserVideoPostPO(driver);
+        }
+        return null;
+    }
+
+
+    public void commentOnFirstVideo(int comment_icon_x, int comment_icon_y) {
+        UserVideoPostPO videoPostPO = selectFirstVideoFromUserPosts();
+        if(videoPostPO==null){
+            videoPostPO.tapOnCommentIcon(comment_icon_x, comment_icon_y);
+        }
+
+    }
 }

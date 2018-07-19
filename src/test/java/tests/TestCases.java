@@ -7,7 +7,6 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pageobjects.*;
-import utils.AppiumUtils;
 import utils.PropertyUtils;
 
 /**
@@ -17,7 +16,13 @@ import utils.PropertyUtils;
  */
 public class TestCases extends BaseTest {
 
+    private final String USERNAME = PropertyUtils.getProperty("valid.email", "username");
+    private final String PASSWORD = PropertyUtils.getProperty("valid.password", "password");
     private final String USERNAME_TO_BE_SEARCHED = PropertyUtils.getProperty("search.username", "username");
+    private final String FAN_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan1", "@ashbare22");
+    private final String FAN2_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan5", "username");
+    private final int COMMENT_ICON_X = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_x", 980);
+    private final int COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_y", 1235);
 
     @BeforeTest
     @Override
@@ -57,7 +62,7 @@ public class TestCases extends BaseTest {
 
     @Test
     public void verifyUserCanLikeThePost() {
-        final int postNo=3;
+        final int postNo = 3;
         DashboardPO dashboardPO = new DashboardPO(driver);
         dashboardPO.waitTillDashboardIsDisplayed();
         dashboardPO.moveToPost(postNo);
@@ -66,12 +71,19 @@ public class TestCases extends BaseTest {
     }
 
     @Test
-    public void verifyUserCanCommentOnFansOfUser(){
+    public void verifyUserCanCommentOnFansOfUser() {
         DashboardPO dashboardPO = new DashboardPO(driver);
         dashboardPO.waitTillDashboardIsDisplayed();
-        SearchPO searchPO = dashboardPO.tapOnSearchButton();
-        searchPO.serachUser(USERNAME_TO_BE_SEARCHED);
+        dashboardPO.tapOnUserProfile();
+        LoginPO loginPO = dashboardPO.tapOnLoginLink();
+        loginPO.login(USERNAME, PASSWORD);
+        Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
 
+        SearchPO searchPO = dashboardPO.tapOnSearchButton();
+        UserProfilePO userProfilePO = searchPO.serachAndSelectTheUser(USERNAME_TO_BE_SEARCHED);
+        FansPO fansPO = userProfilePO.tapOnFansCount();
+        UserProfilePO fanProfilePO = fansPO.selectFan(FAN2_TO_BE_SELECTED);
+        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y);
     }
 
 }
