@@ -53,8 +53,10 @@ public class SearchPO extends BasePO {
     List<AndroidElement> userIdElements;
 
     protected void selectUser(String userId) {
-        for (AndroidElement el : userIdElements)
-            System.out.println(el.getText());
+        waitUtils.staticWait(2000);
+        waitUtils.waitForElementToBeVisible(searchButton, driver);
+//        for (AndroidElement el : userIdElements)
+//            System.out.println(el.getText());
         AppiumUtils.getElementFromText(driver, userIdElements, userId).click();
     }
 

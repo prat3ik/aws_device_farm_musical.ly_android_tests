@@ -33,35 +33,56 @@ public class UserVideoPostPO extends BasePO {
     public boolean tapOnCommentIcon(int comment_icon_x, int comment_icon_y) {
         waitTillVideoPostIsDisplayed();
         AppiumUtils.clickOnPoint(comment_icon_x, comment_icon_y, driver);
-        return AppiumUtils.isElementDisplayed(disabledCommentSectionTextView) || AppiumUtils.isElementDisplayed(limitedCommentsTextView);
+//        System.out.println(AppiumUtils.isElementDisplayed(disabledCommentSectionTextView));
+//        System.out.println(AppiumUtils.isElementDisplayed(limitedCommentsTextView));
+        if (AppiumUtils.isElementDisplayed(commentEditText) && !AppiumUtils.isElementDisplayed(limitedCommentsTextView))
+            return false;
+//        else if (AppiumUtils.isElementDisplayed(disabledCommentSectionTextView))
+//            return true;
+//        else if (AppiumUtils.isElementDisplayed(limitedCommentsTextView))
+//            return true;
+        else
+            return true;
     }
 
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='This user has disabled comment section']")
     AndroidElement disabledCommentSectionTextView;
 
-    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Comments of this video have been limited']")
+    @AndroidFindBy(xpath = "//android.widget.EditText[@text='Comments of this video have been limited']")
     AndroidElement limitedCommentsTextView;
 
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/yl")
     AndroidElement commentButton;
 
-
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/vp")
     AndroidElement postedFirstComment;
+
+    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/ik")
+    AndroidElement closeCommentViewButton;
+
+    public void tapOnCloseCommentViewButton() {
+        System.out.println("Moving back to Post..............");
+        closeCommentViewButton.click();
+        waitUtils.staticWait(500);
+    }
 
     public void postComment(String commentText) {
         commentEditText.sendKeys(commentText);
         waitUtils.staticWait(200);
-        driver.getKeyboard();
+        commentEditText.click();
+        commentEditText.click();
         commentButton.click();
         waitUtils.staticWait(400);
         Assert.assertEquals(postedFirstComment.getText(), commentText, "Typed Comment didn't match");
+        tapOnCloseCommentViewButton();
+        tapOnBackArrowFromPostScreen();
     }
 
-    public void moveBackTOUserProfileAfterOpeningComments() {
-        driver.navigate().back();
-        driver.navigate().back();
+    public void tapOnBackArrowFromPostScreen() {
+        System.out.println("Moving back to User Profile..............");
+        AppiumUtils.clickOnPoint(80, 163, driver);
+        waitUtils.staticWait(500);
+        waitUtils.waitForElementToBeVisible(new UserProfilePO(driver).getFansCountTextView(), driver);
     }
-
 
 }

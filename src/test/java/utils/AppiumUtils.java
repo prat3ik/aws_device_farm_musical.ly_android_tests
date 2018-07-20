@@ -31,7 +31,7 @@ public class AppiumUtils {
      * @return
      */
     public static boolean isElementDisplayed(AndroidElement element) {
-        waitUtils.staticWait(2000);
+        waitUtils.staticWait(500);
         boolean isPresent = false;
         try {
             element.isDisplayed();
