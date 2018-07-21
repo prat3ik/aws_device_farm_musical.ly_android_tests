@@ -123,6 +123,7 @@ public class AppiumUtils {
      * @param driver
      */
     public static void clickOnPoint(int x, int y, AppiumDriver driver) {
+        System.out.println(x + "   :    " + y);
         new TouchAction(driver).press(PointOption.point(x, y)).release().perform();
     }
 

@@ -32,17 +32,23 @@ public class TestCases extends BaseTest {
     private final String FAN9_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan9", "username");
     private final String FAN10_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan10", "username");
 
-//    private final int COMMENT_ICON_X = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_x", 980);
-//    private final int COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_y", 1235);
+    int COMMENT_ICON_X = PropertyUtils.getIntegerProperty("Pixel.comment.icon_x", 980);
+    int COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("Pixel.comment.icon_y", 1235);
 
-    private final int COMMENT_ICON_X = PropertyUtils.getIntegerProperty("Pixel.comment.icon_x", 980);
-    private final int COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("Pixel.comment.icon_y", 1235);
+//    COMMENT_ICON_X = 5;
+//    COMMENT_ICON_X = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_x", 980);
+//    COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_y", 1235);
 
     private String COMMENT_TEXT = PropertyUtils.getProperty("comment.text", "Test1235");
 
     @BeforeTest
     @Override
     public void setUpPage() {
+        if (EXECUTION_TYPE.equals("local")) {
+            COMMENT_ICON_X = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_x", 980);
+            COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("OnePlus3T.comment.icon_y", 1235);
+        }
+
         ProcessBuilder pb = new ProcessBuilder("adb", "shell", "settings", "put", "system", "pointer_location", "1");
         Process pc = null;
         try {
@@ -114,46 +120,46 @@ public class TestCases extends BaseTest {
         COMMENT_TEXT += System.currentTimeMillis() + "";
         DashboardPO dashboardPO = new DashboardPO(driver);
         dashboardPO.waitTillDashboardIsDisplayed();
-        dashboardPO.tapOnUserProfile();
-        LoginPO loginPO = dashboardPO.tapOnLoginLink();
-        loginPO.login(USERNAME, PASSWORD);
-        Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
+//        dashboardPO.tapOnUserProfile();
+//        LoginPO loginPO = dashboardPO.tapOnLoginLink();
+//        loginPO.login(USERNAME, PASSWORD);
+//        Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
 
         SearchPO searchPO = dashboardPO.tapOnSearchButton();
         UserProfilePO userProfilePO = searchPO.serachAndSelectTheUser(USERNAME_TO_BE_SEARCHED);
         FansPO fansPO = userProfilePO.tapOnFansCount();
 
         UserProfilePO fanProfilePO = new UserProfilePO(driver);
-//
-//        fanProfilePO = fansPO.selectFan(FAN_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
-//        fanProfilePO = fansPO.selectFan(FAN2_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+
+        fanProfilePO = fansPO.selectFan(FAN_TO_BE_SELECTED);
+        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+
+        fanProfilePO = fansPO.selectFan(FAN2_TO_BE_SELECTED);
+        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 
         fanProfilePO = fansPO.selectFan(FAN3_TO_BE_SELECTED);
         fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 
-        fanProfilePO = fansPO.selectFan(FAN4_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+//        fanProfilePO = fansPO.selectFan(FAN4_TO_BE_SELECTED);
+//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 
-        fanProfilePO = fansPO.selectFan(FAN5_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-        fanProfilePO = fansPO.selectFan(FAN6_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-        fanProfilePO = fansPO.selectFan(FAN7_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-        fanProfilePO = fansPO.selectFan(FAN8_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-        fanProfilePO = fansPO.selectFan(FAN9_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-        fanProfilePO = fansPO.selectFan(FAN10_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+//        fanProfilePO = fansPO.selectFan(FAN5_TO_BE_SELECTED);
+//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+//
+//        fanProfilePO = fansPO.selectFan(FAN6_TO_BE_SELECTED);
+//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+//
+//        fanProfilePO = fansPO.selectFan(FAN7_TO_BE_SELECTED);
+//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+//
+//        fanProfilePO = fansPO.selectFan(FAN8_TO_BE_SELECTED);
+//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+//
+//        fanProfilePO = fansPO.selectFan(FAN9_TO_BE_SELECTED);
+//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+//
+//        fanProfilePO = fansPO.selectFan(FAN10_TO_BE_SELECTED);
+//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 
     }
 
