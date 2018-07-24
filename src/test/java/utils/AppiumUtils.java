@@ -31,7 +31,7 @@ public class AppiumUtils {
      * @return
      */
     public static boolean isElementDisplayed(AndroidElement element) {
-        waitUtils.staticWait(2000);
+        waitUtils.staticWait(500);
         boolean isPresent = false;
         try {
             element.isDisplayed();
@@ -123,6 +123,7 @@ public class AppiumUtils {
      * @param driver
      */
     public static void clickOnPoint(int x, int y, AppiumDriver driver) {
+        System.out.println(x + "   :    " + y);
         new TouchAction(driver).press(PointOption.point(x, y)).release().perform();
     }
 

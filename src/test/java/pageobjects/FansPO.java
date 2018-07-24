@@ -33,12 +33,12 @@ public class FansPO extends BasePO {
         List<AndroidElement> fansIdElements = driver.findElements(By.id("com.zhiliaoapp.musically:id/al4"));
         boolean isFanFound = false;
         String lastFan1 = "";
-        System.out.println(fansIdElements);
+//        System.out.println(fansIdElements);
         while (!isFanFound) {
-            for (AndroidElement el : fansIdElements) {
-                System.out.println("SIZE:::"+fansIdElements.size());
-                System.out.println(el.getText());
-            }
+//            for (AndroidElement el : fansIdElements) {
+//                System.out.println("SIZE:::"+fansIdElements.size());
+//                System.out.println(el.getText());
+//            }
 
             lastFan1 = fansIdElements.get(fansIdElements.size() - 1).getText();
             for (AndroidElement el : fansIdElements) {
@@ -64,6 +64,7 @@ public class FansPO extends BasePO {
      */
     public UserProfilePO selectFan(String fanId) {
         getFan(fanId).click();
+        System.out.println(fanId+" : selected");
         return new UserProfilePO(driver);
     }
 }

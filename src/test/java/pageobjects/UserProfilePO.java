@@ -17,12 +17,16 @@ public class UserProfilePO extends BasePO {
      *
      * @param driver the appium driver created in the beforesuite method.
      */
-    protected UserProfilePO(AppiumDriver driver) {
+    public UserProfilePO(AppiumDriver driver) {
         super(driver);
     }
 
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/a4t")
     AndroidElement fansCountTextView;
+
+    public AndroidElement getFansCountTextView() {
+        return fansCountTextView;
+    }
 
     public FansPO tapOnFansCount() {
         fansCountTextView.click();
@@ -30,33 +34,52 @@ public class UserProfilePO extends BasePO {
     }
 
 
-    @AndroidFindBy(xpath = "android.widget.TextView[@text='No videos yet']")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='No videos yet']")
     AndroidElement noVideosYetTextView;
 
-    @AndroidFindBy(xpath = "android.widget.TextView[@text='Private Account']")
+    @AndroidFindBy(xpath = "//android.widget.TextView[@text='Private Account']")
     AndroidElement privateAccountTextView;
 
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/ahb")
     AndroidElement firstVideoFromPost;
 
-    protected UserVideoPostPO selectFirstVideoFromUserPosts(){
-        if (AppiumUtils.isElementDisplayed(noVideosYetTextView))
-            System.out.println("There are no videos");
-        else if (AppiumUtils.isElementDisplayed(noVideosYetTextView))
-            System.out.println("This is Private Account, so you can not see any post for this user");
-        else if(AppiumUtils.isElementDisplayed(firstVideoFromPost)){
+    protected UserVideoPostPO selectFirstVideoFromUserPosts() {
+        waitUtils.staticWait(1500);
+        waitUtils.waitForElementToBeVisible(fansCountTextView, driver);
+        if (AppiumUtils.isElementDisplayed(firstVideoFromPost)) {
+            System.out.println("Selecting first video from list:" + firstVideoFromPost);
             firstVideoFromPost.click();
             return new UserVideoPostPO(driver);
+        } else if (AppiumUtils.isElementDisplayed(privateAccountTextView))
+            System.out.println("This is Private Account, so you can not see any post for this user");
+        else if (AppiumUtils.isElementDisplayed(noVideosYetTextView)) {
+            System.out.println("There are no videos");
         }
         return null;
     }
 
 
-    public void commentOnFirstVideo(int comment_icon_x, int comment_icon_y) {
-        UserVideoPostPO videoPostPO = selectFirstVideoFromUserPosts();
-        if(videoPostPO==null){
-            videoPostPO.tapOnCommentIcon(comment_icon_x, comment_icon_y);
-        }
+    @AndroidFindBy(id = "com.zhiliaoapp.musically:id/ik")
+    AndroidElement backButton;
 
+    public void tapOnBackButton() {
+        if (backButton.isDisplayed())
+            backButton.click();
+    }
+
+    public void commentOnFirstVideo(int comment_icon_x, int comment_icon_y, String commentText) {
+        UserVideoPostPO videoPostPO = selectFirstVideoFromUserPosts();
+        System.out.println(videoPostPO);
+        if (videoPostPO != null) {
+            boolean isCommentIsDisabled = videoPostPO.tapOnCommentIcon(comment_icon_x, comment_icon_y);
+            System.out.println("Is Comment Disabled:" + isCommentIsDisabled);
+            if (isCommentIsDisabled) {
+                videoPostPO.tapOnCloseCommentViewButton();
+                videoPostPO.tapOnBackArrowFromPostScreen();
+            }
+            else
+                videoPostPO.postComment(commentText);
+        }
+        this.tapOnBackButton();
     }
 }
