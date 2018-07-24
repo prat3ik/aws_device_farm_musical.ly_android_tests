@@ -1,21 +1,19 @@
 import os, json
-# os.system('search.username=username')
-# os.system('mvn clean package -DskipTests=true')
 
-
-
-user_email = 'abc@abc.com'
-user_pass = 'testtesttest'
-fan1 = '@11111'
-fan2 = '@22222'
-fan3 = '@33333'
-comment_text='Text23456'
-commnt_icon_x_location = '1024444'
-commnt_icon_y_location = '204788'
+user_email = 'pratikchachpara@gmail.com'
+user_pass = 'pratikmusicly'
+username_to_be_searched = 'test'
+fan1 = '@beangwen5558'
+fan2 = '@justfunbea'
+fan3 = '@test927'
+comment_text='HelloThisIsCommentSample'
+commnt_icon_x_location = '1008'
+commnt_icon_y_location = '1146'
 
 print("1) Chagning the configuration values.....")
 os.system("sed -i '' 's/valid.email=pratikchachpara@gmail.com/valid.email="+user_email+"/g' src/test/resources/configuration.properties")
 os.system("sed -i '' 's/valid.password=pratikmusicly/valid.password="+user_pass+"/g' src/test/resources/configuration.properties")
+os.system("sed -i '' 's/search.username=username/search.username="+username_to_be_searched+"/g' src/test/resources/configuration.properties")
 os.system("sed -i '' 's/username.fan1=@ashbare22/username.fan1="+fan1+"/g' src/test/resources/configuration.properties")
 os.system("sed -i '' 's/username.fan2=@piggylover4122007/username.fan2="+fan2+"/g' src/test/resources/configuration.properties")
 os.system("sed -i '' 's/username.fan3=@lxdanielxl/username.fan3="+fan3+"/g' src/test/resources/configuration.properties")
@@ -50,8 +48,8 @@ os.system(schedule_run_command)
 
 print("6) Congratulations. Build started on AWS..!")
 
-print("7) Resetting the changes made to configuraion file..")
-os.system('git stash')
+print("7) Resetting the changes made to configuration.properties file..")
+os.system('git checkout -- src/test/resources/configuration.properties')
 
 print("DONE!")
 
