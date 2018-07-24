@@ -44,6 +44,8 @@ public class UserProfilePO extends BasePO {
     AndroidElement firstVideoFromPost;
 
     protected UserVideoPostPO selectFirstVideoFromUserPosts() {
+        waitUtils.staticWait(1500);
+        waitUtils.waitForElementToBeVisible(fansCountTextView, driver);
         if (AppiumUtils.isElementDisplayed(firstVideoFromPost)) {
             System.out.println("Selecting first video from list:" + firstVideoFromPost);
             firstVideoFromPost.click();
@@ -71,8 +73,10 @@ public class UserProfilePO extends BasePO {
         if (videoPostPO != null) {
             boolean isCommentIsDisabled = videoPostPO.tapOnCommentIcon(comment_icon_x, comment_icon_y);
             System.out.println("Is Comment Disabled:" + isCommentIsDisabled);
-            if (isCommentIsDisabled)
+            if (isCommentIsDisabled) {
+                videoPostPO.tapOnCloseCommentViewButton();
                 videoPostPO.tapOnBackArrowFromPostScreen();
+            }
             else
                 videoPostPO.postComment(commentText);
         }

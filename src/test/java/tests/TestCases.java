@@ -120,25 +120,25 @@ public class TestCases extends BaseTest {
         COMMENT_TEXT += System.currentTimeMillis() + "";
         DashboardPO dashboardPO = new DashboardPO(driver);
         dashboardPO.waitTillDashboardIsDisplayed();
-//        dashboardPO.tapOnUserProfile();
-//        LoginPO loginPO = dashboardPO.tapOnLoginLink();
-//        loginPO.login(USERNAME, PASSWORD);
-//        Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
+        if (!EXECUTION_TYPE.equals("local")) {
+            dashboardPO.tapOnUserProfile();
+            LoginPO loginPO = dashboardPO.tapOnLoginLink();
+            loginPO.login(USERNAME, PASSWORD);
+            Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
+        }
 
         SearchPO searchPO = dashboardPO.tapOnSearchButton();
         UserProfilePO userProfilePO = searchPO.serachAndSelectTheUser(USERNAME_TO_BE_SEARCHED);
         FansPO fansPO = userProfilePO.tapOnFansCount();
 
-        UserProfilePO fanProfilePO = new UserProfilePO(driver);
-
-        fanProfilePO = fansPO.selectFan(FAN_TO_BE_SELECTED);
+        UserProfilePO fanProfilePO = fansPO.selectFan(FAN_TO_BE_SELECTED);
         fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 
         fanProfilePO = fansPO.selectFan(FAN2_TO_BE_SELECTED);
         fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 
-        fanProfilePO = fansPO.selectFan(FAN3_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+//        fanProfilePO = fansPO.selectFan(FAN3_TO_BE_SELECTED);
+//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 
 //        fanProfilePO = fansPO.selectFan(FAN4_TO_BE_SELECTED);
 //        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
@@ -146,9 +146,9 @@ public class TestCases extends BaseTest {
 //        fanProfilePO = fansPO.selectFan(FAN5_TO_BE_SELECTED);
 //        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 //
-//        fanProfilePO = fansPO.selectFan(FAN6_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
+        fanProfilePO = fansPO.selectFan(FAN6_TO_BE_SELECTED);
+        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+
 //        fanProfilePO = fansPO.selectFan(FAN7_TO_BE_SELECTED);
 //        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 //

@@ -118,7 +118,7 @@ public abstract class BaseTest {
         String APP_FULL_RESET = PropertyUtils.getProperty("android.app.full.reset");
         String APP_NO_RESET = PropertyUtils.getProperty("android.app.no.reset");
 
-        //desiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
+        desiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
         desiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE_NAME);
         desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, PLATFORM_NAME);
         desiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, PLATFORM_VERSION);
