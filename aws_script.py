@@ -27,7 +27,13 @@ print("2) Packaging the Test cases Jar....")
 os.system('mvn clean package -DskipTests=true')
 
 print("3) Uploading test cases to AWS....")
-os.system('curl -T target/zip-with-dependencies.zip "https://prod-us-west-2-uploads.s3-us-west-2.amazonaws.com/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A871290565691%3Aproject%3A08ddbcf6-51e1-4c6c-9cee-6505d7b1d8aa/uploads/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A871290565691%3Aupload%3A08ddbcf6-51e1-4c6c-9cee-6505d7b1d8aa/35122ac7-aca7-47b0-888e-ae44e3877555/musically.zip?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20180724T174519Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Credential=AKIAJSORV74ENYFBITRQ%2F20180724%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Signature=8a09a9a39c902a38884abfc2e50ecdfb9b290c8e18ada8b9cb96f0d955adab06"')
+os.system('aws devicefarm create-upload --project-arn arn:aws:devicefarm:us-west-2:871290565691:project:08ddbcf6-51e1-4c6c-9cee-6505d7b1d8aa --type APPIUM_JAVA_TESTNG_TEST_PACKAGE --name musically.zip > responseurl.json')
+with open('responseurl.json') as data_file:    
+		data = json.load(data_file)
+url = data['upload']['url']
+print("Url upon which .zip will be uploaded--> "+url)		
+
+os.system('curl -T target/zip-with-dependencies.zip "'+url+'"')
 
 print("4) Getting the status of uploaded Zip file....")
 status = False
