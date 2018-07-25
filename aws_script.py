@@ -1,25 +1,27 @@
 import os, json
 
-user_email = 'pratikchachpara@gmail.com'
-user_pass = 'pratikmusicly'
+# user_email = 'pratikchachpara@gmail.com'
+# user_pass = 'pratikmusicly'
 username_to_be_searched = 'test'
-fan1 = '@beangwen5558'
-fan2 = '@justfunbea'
-fan3 = '@test927'
-comment_text='HelloThisIsCommentSample'
-commnt_icon_x_location = '1008'
-commnt_icon_y_location = '1146'
+no_of_fans_to_be_commented = '4'
+# fan1 = '@beangwen5558'
+# fan2 = '@justfunbea'
+# fan3 = '@test927'
+# comment_text='HelloThisIsCommentSample'
+# commnt_icon_x_location = '1008'
+# commnt_icon_y_location = '1146'
 
 print("1) Chagning the configuration values.....")
-os.system("sed -i '' 's/valid.email=pratikchachpara@gmail.com/valid.email="+user_email+"/g' src/test/resources/configuration.properties")
-os.system("sed -i '' 's/valid.password=pratikmusicly/valid.password="+user_pass+"/g' src/test/resources/configuration.properties")
+# os.system("sed -i '' 's/valid.email=pratikchachpara@gmail.com/valid.email="+user_email+"/g' src/test/resources/configuration.properties")
+# os.system("sed -i '' 's/valid.password=pratikmusicly/valid.password="+user_pass+"/g' src/test/resources/configuration.properties")
 os.system("sed -i '' 's/search.username=username/search.username="+username_to_be_searched+"/g' src/test/resources/configuration.properties")
-os.system("sed -i '' 's/username.fan1=@ashbare22/username.fan1="+fan1+"/g' src/test/resources/configuration.properties")
-os.system("sed -i '' 's/username.fan2=@piggylover4122007/username.fan2="+fan2+"/g' src/test/resources/configuration.properties")
-os.system("sed -i '' 's/username.fan3=@lxdanielxl/username.fan3="+fan3+"/g' src/test/resources/configuration.properties")
-os.system("sed -i '' 's/comment.text=Hello123/comment.text="+comment_text+"/g' src/test/resources/configuration.properties")
-os.system("sed -i '' 's/Pixel.comment.icon_x=1007/Pixel.comment.icon_x="+commnt_icon_x_location+"/g' src/test/resources/configuration.properties")
-os.system("sed -i '' 's/Pixel.comment.icon_y=1145/Pixel.comment.icon_y="+commnt_icon_y_location+"/g' src/test/resources/configuration.properties")
+os.system("sed -i '' 's/search.username.fan.count=4/search.username.fan.count="+no_of_fans_to_be_commented+"/g' src/test/resources/configuration.properties")
+# os.system("sed -i '' 's/username.fan1=@ashbare22/username.fan1="+fan1+"/g' src/test/resources/configuration.properties")
+# os.system("sed -i '' 's/username.fan2=@piggylover4122007/username.fan2="+fan2+"/g' src/test/resources/configuration.properties")
+# os.system("sed -i '' 's/username.fan3=@lxdanielxl/username.fan3="+fan3+"/g' src/test/resources/configuration.properties")
+# os.system("sed -i '' 's/comment.text=Hello123/comment.text="+comment_text+"/g' src/test/resources/configuration.properties")
+# os.system("sed -i '' 's/Pixel.comment.icon_x=1007/Pixel.comment.icon_x="+commnt_icon_x_location+"/g' src/test/resources/configuration.properties")
+# os.system("sed -i '' 's/Pixel.comment.icon_y=1145/Pixel.comment.icon_y="+commnt_icon_y_location+"/g' src/test/resources/configuration.properties")
 
 print("2) Packaging the Test cases Jar....")
 os.system('mvn clean package -DskipTests=true')
