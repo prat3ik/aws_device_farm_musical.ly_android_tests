@@ -10,6 +10,7 @@ import pageobjects.*;
 import utils.PropertyUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * This is the Main Test Cases Class, All the test cases are defined in this.
@@ -21,16 +22,11 @@ public class TestCases extends BaseTest {
     private final String USERNAME = PropertyUtils.getProperty("valid.email", "username");
     private final String PASSWORD = PropertyUtils.getProperty("valid.password", "password");
     private final String USERNAME_TO_BE_SEARCHED = PropertyUtils.getProperty("search.username", "username");
-    private final String FAN_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan1", "@ashbare22");
-    private final String FAN2_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan2", "username");
-    private final String FAN3_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan3", "username");
-    private final String FAN4_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan4", "username");
-    private final String FAN5_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan5", "username");
-    private final String FAN6_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan6", "username");
-    private final String FAN7_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan7", "username");
-    private final String FAN8_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan8", "username");
-    private final String FAN9_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan9", "username");
-    private final String FAN10_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan10", "username");
+    private final int FAN_TO_BE_SELECTED = PropertyUtils.getIntegerProperty("search.username.fan.count", 3);
+    private final String COMMENT1 = PropertyUtils.getProperty("fan.comment1", "Hello there1");
+    private final String COMMENT2 = PropertyUtils.getProperty("fan.comment2", "Hello there2");
+    private final String COMMENT3 = PropertyUtils.getProperty("fan.comment3", "Hello there3");
+
 
     int COMMENT_ICON_X = PropertyUtils.getIntegerProperty("Pixel.comment.icon_x", 980);
     int COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("Pixel.comment.icon_y", 1235);
@@ -131,35 +127,7 @@ public class TestCases extends BaseTest {
         UserProfilePO userProfilePO = searchPO.serachAndSelectTheUser(USERNAME_TO_BE_SEARCHED);
         FansPO fansPO = userProfilePO.tapOnFansCount();
 
-        UserProfilePO fanProfilePO = fansPO.selectFan(FAN_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-        fanProfilePO = fansPO.selectFan(FAN2_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-//        fanProfilePO = fansPO.selectFan(FAN3_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-//        fanProfilePO = fansPO.selectFan(FAN4_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-//        fanProfilePO = fansPO.selectFan(FAN5_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
-        fanProfilePO = fansPO.selectFan(FAN6_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-//        fanProfilePO = fansPO.selectFan(FAN7_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
-//        fanProfilePO = fansPO.selectFan(FAN8_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
-//        fanProfilePO = fansPO.selectFan(FAN9_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
-//        fanProfilePO = fansPO.selectFan(FAN10_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+        fansPO.selectFans(FAN_TO_BE_SELECTED, Arrays.asList(COMMENT1, COMMENT2, COMMENT3));
 
     }
 

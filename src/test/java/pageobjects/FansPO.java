@@ -57,6 +57,11 @@ public class FansPO extends BasePO {
         return null;
     }
 
+    protected AndroidElement getFan(int fanIndex) {
+        List<AndroidElement> fansIdElements = driver.findElements(By.id("com.zhiliaoapp.musically:id/al4"));
+        return fansIdElements.get(fanIndex);
+    }
+
     /**
      * This method will select the Fan from FanId(Starting with '@')
      *
@@ -64,7 +69,23 @@ public class FansPO extends BasePO {
      */
     public UserProfilePO selectFan(String fanId) {
         getFan(fanId).click();
-        System.out.println(fanId+" : selected");
+        System.out.println(fanId + " : selected");
         return new UserProfilePO(driver);
+    }
+
+
+    public void selectFans(int noOfFans, List<String> commentsForFans) {
+        List<AndroidElement> fansIdElements = driver.findElements(By.id("com.zhiliaoapp.musically:id/al4"));
+        System.out.println("Test");
+        for(AndroidElement el : fansIdElements){
+            System.out.println(el);
+        }
+        System.out.println("Elements::"+ fansIdElements);
+        for (int i = 0; i < noOfFans; i++) {
+            System.out.println(fansIdElements.get(i).getText() + " : selecting...");
+            fansIdElements.get(i).click();
+            new UserProfilePO(driver).commentOnFirstVideo(commentsForFans.get(i));
+
+        }
     }
 }

@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import utils.AppiumUtils;
+import utils.PropertyUtils;
 
 public class UserProfilePO extends BasePO {
     /**
@@ -20,6 +21,9 @@ public class UserProfilePO extends BasePO {
     public UserProfilePO(AppiumDriver driver) {
         super(driver);
     }
+
+    int COMMENT_ICON_X = PropertyUtils.getIntegerProperty("Pixel.comment.icon_x", 980);
+    int COMMENT_ICON_Y = PropertyUtils.getIntegerProperty("Pixel.comment.icon_y", 1235);
 
     @AndroidFindBy(id = "com.zhiliaoapp.musically:id/a4t")
     AndroidElement fansCountTextView;
@@ -72,6 +76,22 @@ public class UserProfilePO extends BasePO {
         System.out.println(videoPostPO);
         if (videoPostPO != null) {
             boolean isCommentIsDisabled = videoPostPO.tapOnCommentIcon(comment_icon_x, comment_icon_y);
+            System.out.println("Is Comment Disabled:" + isCommentIsDisabled);
+            if (isCommentIsDisabled) {
+                videoPostPO.tapOnCloseCommentViewButton();
+                videoPostPO.tapOnBackArrowFromPostScreen();
+            }
+            else
+                videoPostPO.postComment(commentText);
+        }
+        this.tapOnBackButton();
+    }
+
+    public void commentOnFirstVideo(String commentText) {
+        UserVideoPostPO videoPostPO = selectFirstVideoFromUserPosts();
+        System.out.println(videoPostPO);
+        if (videoPostPO != null) {
+            boolean isCommentIsDisabled = videoPostPO.tapOnCommentIcon(COMMENT_ICON_X, COMMENT_ICON_Y);
             System.out.println("Is Comment Disabled:" + isCommentIsDisabled);
             if (isCommentIsDisabled) {
                 videoPostPO.tapOnCloseCommentViewButton();
