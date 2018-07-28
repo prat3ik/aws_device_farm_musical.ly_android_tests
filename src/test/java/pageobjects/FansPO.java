@@ -64,7 +64,17 @@ public class FansPO extends BasePO {
      */
     public UserProfilePO selectFan(String fanId) {
         getFan(fanId).click();
-        System.out.println(fanId+" : selected");
+        System.out.println(fanId + " : selected");
         return new UserProfilePO(driver);
+    }
+
+    public void selectFans(int noOfFans, List<String> commentsForFans, int commentLocationX, int commentLocationY) {
+        List<AndroidElement> fansIdElements = driver.findElements(By.id("com.zhiliaoapp.musically:id/al4"));
+        for (int i = 0; i < noOfFans; i++) {
+            System.out.println(fansIdElements.get(i).getText() + " : selecting...");
+            fansIdElements.get(i).click();
+            new UserProfilePO(driver).commentOnFirstVideo(commentLocationX, commentLocationY, commentsForFans.get(i));
+
+        }
     }
 }

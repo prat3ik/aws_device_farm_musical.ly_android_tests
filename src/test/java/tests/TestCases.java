@@ -7,9 +7,12 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pageobjects.*;
+import utils.AppiumUtils;
 import utils.PropertyUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This is the Main Test Cases Class, All the test cases are defined in this.
@@ -21,7 +24,8 @@ public class TestCases extends BaseTest {
     private final String USERNAME = PropertyUtils.getProperty("valid.email", "username");
     private final String PASSWORD = PropertyUtils.getProperty("valid.password", "password");
     private final String USERNAME_TO_BE_SEARCHED = PropertyUtils.getProperty("search.username", "username");
-    private final String FAN_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan1", "@ashbare22");
+    private final int FAN_TO_BE_SELECTED = PropertyUtils.getIntegerProperty("search.username.fan.count", 3);
+
     private final String FAN2_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan2", "username");
     private final String FAN3_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan3", "username");
     private final String FAN4_TO_BE_SELECTED = PropertyUtils.getProperty("username.fan4", "username");
@@ -116,8 +120,10 @@ public class TestCases extends BaseTest {
             e.printStackTrace();
         }
         System.out.println("Finish!");
-
-        COMMENT_TEXT += System.currentTimeMillis() + "";
+        List<String> listOfComments = new ArrayList<String>();
+        for (int i = 1; i <= FAN_TO_BE_SELECTED; i++) {
+            listOfComments.add(PropertyUtils.getProperty("fan.comment"+i, "Hello there1")+System.currentTimeMillis());
+        }
         DashboardPO dashboardPO = new DashboardPO(driver);
         dashboardPO.waitTillDashboardIsDisplayed();
         if (!EXECUTION_TYPE.equals("local")) {
@@ -130,37 +136,22 @@ public class TestCases extends BaseTest {
         SearchPO searchPO = dashboardPO.tapOnSearchButton();
         UserProfilePO userProfilePO = searchPO.serachAndSelectTheUser(USERNAME_TO_BE_SEARCHED);
         FansPO fansPO = userProfilePO.tapOnFansCount();
+        if(AppiumUtils.isElementDisplayed(dashboardPO.getLoginLink())){
+            LoginPO loginPO = dashboardPO.tapOnLoginLink();
+            loginPO.login(USERNAME, PASSWORD);
+            Assert.assertFalse(loginPO.isinvalidEmailOrPasswordErrorDisplayed(), "Email and Password is invalid");
+        }
 
-        UserProfilePO fanProfilePO = fansPO.selectFan(FAN_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
+        fansPO.selectFans(FAN_TO_BE_SELECTED, listOfComments, COMMENT_ICON_X, COMMENT_ICON_Y);
 
-        fanProfilePO = fansPO.selectFan(FAN2_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-//        fanProfilePO = fansPO.selectFan(FAN3_TO_BE_SELECTED);
+//        UserProfilePO fanProfilePO = fansPO.selectFan(FAN_TO_BE_SELECTED);
 //        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 
-//        fanProfilePO = fansPO.selectFan(FAN4_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-//        fanProfilePO = fansPO.selectFan(FAN5_TO_BE_SELECTED);
+//        fanProfilePO = fansPO.selectFan(FAN2_TO_BE_SELECTED);
 //        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
 //
-        fanProfilePO = fansPO.selectFan(FAN6_TO_BE_SELECTED);
-        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
-//        fanProfilePO = fansPO.selectFan(FAN7_TO_BE_SELECTED);
+//        fanProfilePO = fansPO.selectFan(FAN6_TO_BE_SELECTED);
 //        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
-//        fanProfilePO = fansPO.selectFan(FAN8_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
-//        fanProfilePO = fansPO.selectFan(FAN9_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-//
-//        fanProfilePO = fansPO.selectFan(FAN10_TO_BE_SELECTED);
-//        fanProfilePO.commentOnFirstVideo(COMMENT_ICON_X, COMMENT_ICON_Y, COMMENT_TEXT);
-
     }
 
 }

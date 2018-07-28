@@ -69,7 +69,9 @@ public class UserVideoPostPO extends BasePO {
     public void postComment(String commentText) {
         commentEditText.sendKeys(commentText);
         waitUtils.staticWait(200);
+        System.out.println("Tapping on Comment Edit Text..");
         commentEditText.click();
+        System.out.println("Again,Tapping on Comment Edit Text..");
         commentEditText.click();
         commentButton.click();
         waitUtils.staticWait(400);

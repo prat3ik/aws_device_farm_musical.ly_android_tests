@@ -52,6 +52,10 @@ public class DashboardPO extends BasePO {
     @AndroidFindBy(xpath = "//android.widget.TextView[@text='Log in']")
     AndroidElement loginLink;
 
+    public AndroidElement getLoginLink() {
+        return loginLink;
+    }
+
     public LoginPO tapOnLoginLink() {
         loginLink.click();
         LoginPO loginPO = new LoginPO(driver);

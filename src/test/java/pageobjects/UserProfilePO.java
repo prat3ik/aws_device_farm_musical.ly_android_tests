@@ -63,23 +63,25 @@ public class UserProfilePO extends BasePO {
     AndroidElement backButton;
 
     public void tapOnBackButton() {
-        if (backButton.isDisplayed())
-            backButton.click();
+        waitUtils.staticWait(2000);
+        waitUtils.waitForElementToBeVisible(backButton, driver);
+        backButton.click();
     }
 
     public void commentOnFirstVideo(int comment_icon_x, int comment_icon_y, String commentText) {
         UserVideoPostPO videoPostPO = selectFirstVideoFromUserPosts();
-        System.out.println(videoPostPO);
+        System.out.println("Video post is: " + videoPostPO);
         if (videoPostPO != null) {
             boolean isCommentIsDisabled = videoPostPO.tapOnCommentIcon(comment_icon_x, comment_icon_y);
             System.out.println("Is Comment Disabled:" + isCommentIsDisabled);
             if (isCommentIsDisabled) {
                 videoPostPO.tapOnCloseCommentViewButton();
                 videoPostPO.tapOnBackArrowFromPostScreen();
-            }
-            else
+            } else
                 videoPostPO.postComment(commentText);
         }
+        System.out.println("Tapping back from User Profile Screen......");
         this.tapOnBackButton();
+        System.out.println("Tapped on back from User Profile Screen!");
     }
 }
